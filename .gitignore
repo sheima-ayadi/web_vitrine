@@ -1,0 +1,21 @@
+# Secrets
+.env
+
+# .NET
+bin/
+obj/
+*.db
+*.sln.dotsettings.user
+
+# Visual Studio
+.vs/
+[Dd]ebug/
+[Rr]elease/
+
+# VS Code
+.vscode/
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
