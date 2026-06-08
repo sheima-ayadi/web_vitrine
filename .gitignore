@@ -16,6 +16,6 @@ obj/
 .vscode/
 
 # Docker
-.dockerignore
-Dockerfile
-docker-compose.yml
+#.dockerignore
+#Dockerfile
+#docker-compose.yml
