@@ -31,7 +31,7 @@ Le code source est entièrement compilé à l'intérieur de l'image Docker pour 
    Le site est désormais accessible sur : **[http://localhost:8080](http://localhost:8080)**
 
 ## ⚙️ Détails Techniques
-- **Image Docker** : `sheimaayadi/web_vitrine:latest` (Docker Hub)
+- **Image Docker** : `chaimaayadi/web_vitrine:latest` (Docker Hub)
 - **Port** : 8080
 - **Base de données** : Connexion ultra-rapide via **Supabase Connection Pooler** (PostgreSQL) pour une performance optimale.
 
