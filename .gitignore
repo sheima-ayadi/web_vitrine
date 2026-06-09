@@ -16,6 +16,4 @@ obj/
 .vscode/
 
 # Docker
-.dockerignore
-Dockerfile
-docker-compose.yml
+# On ne les ignore pas pour GitHub
