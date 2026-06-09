@@ -1,0 +1,49 @@
+<!-- ══════════════ NAVIGATION ══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">
+      <img src="img/logo.svg" alt="Infini-Soft" style="height: 45px; vertical-align: middle;">
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" class="active" id="nav-home">Accueil</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">À Propos</a></li>
+      <li>
+        <a id="nav-services">Services ▾</a>
+        <div class="dropdown">
+          <a onclick="showPage('infogerance')">Infogérance Informatique</a>
+          <a onclick="showPage('cybersecurite')">Cybersécurité</a>
+          <a onclick="showPage('maintenance')">Maintenance Informatique</a>
+          <a onclick="showPage('marketing')">Marketing Digital</a>
+          <a onclick="showPage('audit')">Audit Informatique</a>
+          <a onclick="showPage('erp')">Solution ERP (Odoo)</a>
+          <a onclick="showPage('microsoft365')">Microsoft 365</a>
+          <a onclick="showPage('solutionit')">Solution IT</a>
+          <a onclick="showPage('devweb')">Développement Web</a>
+          <a onclick="showPage('virtualisation')">Virtualisation</a>
+          <a onclick="showPage('telephonie')">Téléphonie IP</a>
+        </div>
+      </li>
+      <li><a onclick="showPage('solutions')" id="nav-solutions">Solutions Spécialisées</a></li>
+      <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+      <li><a onclick="showPage('contact')" class="nav-cta">Devis Gratuit</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home');toggleMenu()">Accueil</a>
+  <a onclick="showPage('about');toggleMenu()">À Propos</a>
+  <a onclick="showPage('cybersecurite');toggleMenu()">Cybersécurité</a>
+  <a onclick="showPage('infogerance');toggleMenu()">Infogérance</a>
+  <a onclick="showPage('maintenance');toggleMenu()">Maintenance</a>
+  <a onclick="showPage('marketing');toggleMenu()">Marketing Digital</a>
+  <a onclick="showPage('audit');toggleMenu()">Audit</a>
+  <a onclick="showPage('erp');toggleMenu()">Solution ERP</a>
+  <a onclick="showPage('devweb');toggleMenu()">Développement Web</a>
+  <a onclick="showPage('solutions');toggleMenu()">Solutions Spécialisées</a>
+  <a onclick="showPage('blog');toggleMenu()">Blog</a>
+  <a onclick="showPage('contact');toggleMenu()">Contact</a>
+</div>

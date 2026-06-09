@@ -1,0 +1,11 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Triangles Logo Part optimized for favicon -->
+  <g transform="translate(1, 1) scale(0.5)">
+    <!-- Orange Triangle -->
+    <path d="M25 0 L45 35 L5 35 Z" fill="#FF6B00" />
+    <!-- Blue Triangle -->
+    <path d="M0 25 L20 60 L-20 60 Z" fill="#007BFF" transform="translate(5, -5)" />
+    <!-- Green Triangle -->
+    <path d="M40 25 L60 60 L20 60 Z" fill="#76B900" transform="translate(-5, -5)" />
+  </g>
+</svg>
