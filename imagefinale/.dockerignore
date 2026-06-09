@@ -1,0 +1,14 @@
+.vs/
+.vscode/
+Backend/bin/
+Backend/obj/
+**/bin/
+**/obj/
+*.db
+*.sqlite
+.git/
+.gitignore
+docker-compose.yml
+Dockerfile
+.dockerignore
+node_modules/

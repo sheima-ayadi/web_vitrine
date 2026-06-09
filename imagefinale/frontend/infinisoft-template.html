@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infini-Soft – Société Informatique</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Mode Clair (Défaut) */
+  --bg: #f8fafc;
+  --bg2: #ffffff;
+  --bg3: #f1f5f9;
+  --accent: #0077ff;
+  --accent2: #0056b3;
+  --accent3: #6366f1;
+  --text: #0f172a;
+  --text2: #475569;
+  --white: #000000;
+  --card: #ffffff;
+  --border: rgba(0,119,255,0.1);
+  --grad: linear-gradient(135deg, #00c8ff 0%, #0077ff 50%, #7b2ff7 100%);
+  --shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1525;
+    --bg3: #141c30;
+    --accent: #00c8ff;
+    --accent2: #0077ff;
+    --accent3: #7b2ff7;
+    --text: #e8edf8;
+    --text2: #8899bb;
+    --white: #ffffff;
+    --card: #131b2e;
+    --border: rgba(0,200,255,0.12);
+    --grad: linear-gradient(135deg, #00c8ff 0%, #0077ff 50%, #7b2ff7 100%);
+    --shadow: 0 20px 60px rgba(0,120,255,0.15);
+  }
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px;}
+
+/* ─── PAGES ─── */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);opacity: 0.95;}
+.nav-inner{max-width:1280px;margin:auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:70px;}
+.logo{display: flex; align-items: center; cursor:pointer;}
+.nav-links{display:flex;gap:0.2rem;list-style:none;}
+.nav-links li{position:relative;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.88rem;font-weight:500;padding:0.5rem 0.9rem;border-radius:6px;transition:all .2s;cursor:pointer;display:block;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);background:rgba(0,200,255,0.07);}
+.dropdown{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:10px;min-width:220px;padding:0.5rem;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .25s;}
+.nav-links li:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0);}
+.dropdown a{font-size:0.84rem;padding:0.45rem 0.8rem;border-radius:6px;color:var(--text2);}
+.dropdown a:hover{color:var(--accent);background:rgba(0,200,255,0.07);}
+.nav-cta{background:var(--grad);color:#fff!important;border-radius:8px;padding:0.5rem 1.2rem!important;font-weight:600!important;-webkit-text-fill-color:#fff!important;}
+.nav-cta:hover{opacity:0.9;color:#fff!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:1rem 2rem;z-index:999;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:.7rem 0;color:var(--text2);text-decoration:none;font-size:.95rem;border-bottom:1px solid var(--border);cursor:pointer;}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:70px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,119,255,0.12) 0%, transparent 70%),radial-gradient(ellipse 60% 50% at 20% 80%, rgba(123,47,247,0.10) 0%, transparent 70%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-inner{max-width:1280px;margin:auto;padding:4rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.25);border-radius:50px;padding:.35rem 1rem;font-size:.8rem;color:var(--accent);margin-bottom:1.5rem;}
+.hero-badge span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem;}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{color:var(--text2);font-size:1.05rem;line-height:1.8;margin-bottom:2rem;max-width:520px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--grad);color:#fff;border:none;padding:.85rem 2rem;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.25s;text-decoration:none;display:inline-block;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,119,255,0.4);}
+.btn-outline{background:transparent;color:var(--accent);border:1px solid rgba(0,200,255,0.3);padding:.85rem 2rem;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.25s;text-decoration:none;display:inline-block;}
+.btn-outline:hover{background:rgba(0,200,255,0.08);border-color:var(--accent);}
+.hero-visual{position:relative;}
+.hero-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-label{font-size:.8rem;color:var(--text2);margin-top:.2rem;}
+.floating-chips{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.chip{background:rgba(0,200,255,0.1);border:1px solid var(--border);border-radius:6px;padding:.3rem .7rem;font-size:.75rem;color:var(--accent);}
+
+/* ─── SECTION BASE ─── */
+section{padding:5rem 0;}
+.container{max-width:1280px;margin:auto;padding:0 2rem;}
+.section-label{font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;line-height:1.2;margin-bottom:1rem;}
+.section-sub{color:var(--text2);font-size:1rem;line-height:1.75;max-width:600px;}
+.section-header{margin-bottom:3.5rem;}
+.text-center{text-align:center;}
+.text-center .section-sub{margin:0 auto;}
+
+/* ─── SERVICES GRID ─── */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:.3s;cursor:pointer;position:relative;overflow:hidden;}
+.service-card::after{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:.3s;}
+.service-card:hover{transform:translateY(-4px);border-color:rgba(0,200,255,0.3);box-shadow:var(--shadow);}
+.service-icon{width:52px;height:52px;background:var(--grad);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem;position:relative;z-index:1;}
+.service-card h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.7rem;position:relative;z-index:1;}
+.service-card p{color:var(--text2);font-size:.88rem;line-height:1.7;position:relative;z-index:1;}
+.service-link{color:var(--accent);font-size:.85rem;font-weight:600;margin-top:1rem;display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;position:relative;z-index:1;cursor:pointer;}
+.service-link:hover{gap:.6rem;}
+
+/* ─── ABOUT SECTION ─── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-img{border-radius:20px;overflow:hidden;position:relative;}
+.about-img-placeholder{width:100%;aspect-ratio:4/3;background:var(--bg3);border-radius:20px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;}
+.about-img-placeholder::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%, rgba(0,119,255,0.2),transparent 60%);}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.feat-item{display:flex;align-items:center;gap:.7rem;font-size:.9rem;color:var(--text2);}
+.feat-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+
+/* ─── STATS BAR ─── */
+.stats-bar{background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.stats-bar-inner{max-width:1280px;margin:auto;padding:2.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.stat-box{text-align:center;}
+.stat-box .num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-box .lbl{color:var(--text2);font-size:.9rem;margin-top:.3rem;}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+.testi-quote{font-size:2rem;color:var(--accent);opacity:.4;line-height:1;}
+.testi-text{color:var(--text2);font-size:.9rem;line-height:1.75;margin:1rem 0 1.5rem;}
+.testi-author{display:flex;align-items:center;gap:.8rem;}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:#fff;}
+.testi-name{font-weight:600;font-size:.9rem;}
+.testi-role{color:var(--text2);font-size:.8rem;margin-top:.1rem;}
+
+/* ─── PARTNERS ─── */
+.partners-row{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;align-items:center;}
+.partner-logo{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.8rem 1.8rem;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:600;color:var(--text2);transition:.2s;}
+.partner-logo:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ─── CTA SECTION ─── */
+.cta-section{background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.cta-inner{max-width:900px;margin:auto;padding:5rem 2rem;text-align:center;}
+.cta-inner h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;margin-bottom:1rem;}
+.cta-inner p{color:var(--text2);font-size:1rem;line-height:1.75;margin-bottom:2.5rem;}
+
+/* ─── CONTACT ─── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start;}
+.contact-info h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:1rem;}
+.contact-info p{color:var(--text2);font-size:.95rem;line-height:1.75;margin-bottom:2rem;}
+.contact-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+.contact-icon{width:44px;height:44px;background:rgba(0,200,255,0.1);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-detail{font-size:.9rem;}
+.contact-detail strong{display:block;margin-bottom:.1rem;}
+.contact-detail span{color:var(--text2);font-size:.85rem;}
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;}
+.form-group{margin-bottom:1.2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+label{display:block;font-size:.85rem;font-weight:500;color:var(--text2);margin-bottom:.5rem;}
+input,textarea,select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:.2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,200,255,0.1);}
+textarea{resize:vertical;min-height:130px;}
+select option{background:var(--bg2);}
+
+/* ─── FOOTER ─── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 0 2rem;}
+.footer-grid{max-width:1280px;margin:auto;padding:0 2rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;}
+.footer-brand p{color:var(--text2);font-size:.88rem;line-height:1.8;margin-top:1rem;max-width:260px;}
+.footer-socials{display:flex;gap:.7rem;margin-top:1.5rem;}
+.social-btn{width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:.85rem;}
+.social-btn:hover{border-color:var(--accent);color:var(--accent);}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:1.2rem;color:var(--white);}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:.6rem;}
+.footer-col a{color:var(--text2);text-decoration:none;font-size:.87rem;transition:.2s;cursor:pointer;}
+.footer-col a:hover{color:var(--accent);}
+.footer-bottom{max-width:1280px;margin:2rem auto 0;padding:1.5rem 2rem 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:gap}
+.footer-bottom p{color:var(--text2);font-size:.83rem;}
+
+/* ─── PAGE HERO ─── */
+.page-hero{padding:8rem 0 4rem;background:var(--bg2);border-bottom:1px solid var(--border);text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(0,119,255,0.12),transparent 70%);}
+.page-hero-inner{position:relative;max-width:800px;margin:auto;padding:0 2rem;}
+.breadcrumb{display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.82rem;color:var(--text2);margin-bottom:1.5rem;}
+.breadcrumb .sep{opacity:.4;}
+.breadcrumb .current{color:var(--accent);}
+
+/* ─── BLOG ─── */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.3s;}
+.blog-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:rgba(0,200,255,0.25);}
+.blog-img{width:100%;height:200px;background:linear-gradient(135deg,rgba(0,119,255,0.2),rgba(123,47,247,0.2));display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.blog-body{padding:1.5rem;}
+.blog-tag{font-size:.75rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem;}
+.blog-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;line-height:1.4;margin-bottom:.7rem;}
+.blog-card p{color:var(--text2);font-size:.85rem;line-height:1.7;}
+.blog-meta{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.8rem;color:var(--text2);}
+
+/* ─── EXPERTISE PAGE ─── */
+.expertise-detail{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;margin-bottom:1.5rem;}
+.expertise-detail h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:1rem;}
+.expertise-detail p{color:var(--text2);font-size:.9rem;line-height:1.75;margin-bottom:1rem;}
+.tag-list{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;}
+.tag{background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:6px;padding:.25rem .7rem;font-size:.78rem;color:var(--accent);}
+
+/* ─── OFFERS GRID ─── */
+.offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.offer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;transition:.3s;}
+.offer-card.featured{border-color:rgba(0,200,255,0.4);background:linear-gradient(135deg,rgba(0,119,255,0.06),rgba(123,47,247,0.06));}
+.offer-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.offer-badge{position:absolute;top:1rem;right:1rem;background:var(--grad);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:50px;}
+.offer-icon{font-size:2.2rem;margin-bottom:1rem;}
+.offer-card h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:.7rem;}
+.offer-card p{color:var(--text2);font-size:.87rem;line-height:1.7;margin-bottom:1.2rem;}
+.offer-list{list-style:none;}
+.offer-list li{font-size:.85rem;color:var(--text2);padding:.25rem 0;display:flex;align-items:center;gap:.5rem;}
+.offer-list li::before{content:'✓';color:var(--accent);font-weight:700;}
+
+/* ─── SOLUTIONS PAGE ─── */
+.solutions-hero-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin-top:3rem;}
+.sol-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center;transition:.3s;}
+.sol-card:hover{border-color:rgba(0,200,255,0.35);transform:translateY(-3px);}
+.sol-icon{width:64px;height:64px;background:var(--grad);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1.2rem;}
+.sol-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.6rem;}
+.sol-card p{color:var(--text2);font-size:.85rem;line-height:1.65;}
+
+/* ─── ANIMATIONS ─── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+.fade-in.visible{opacity:1;transform:none;}
+
+@media(max-width:900px){
+  .hero-inner,.about-grid,.contact-grid,.footer-grid{grid-template-columns:1fr;}
+  .stats-bar-inner{grid-template-columns:repeat(2,1fr);}
+  .hero-visual{display:none;}
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .stats-bar-inner{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAVIGATION ══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">
+      <img src="img/logo.svg" alt="Infini-Soft" style="height: 45px; vertical-align: middle;">
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" class="active" id="nav-home">Accueil</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">À Propos</a></li>
+      <li>
+        <a id="nav-services">Services ▾</a>
+        <div class="dropdown">
+          <a onclick="showPage('infogerance')">Infogérance Informatique</a>
+          <a onclick="showPage('cybersecurite')">Cybersécurité</a>
+          <a onclick="showPage('maintenance')">Maintenance Informatique</a>
+          <a onclick="showPage('marketing')">Marketing Digital</a>
+          <a onclick="showPage('audit')">Audit Informatique</a>
+          <a onclick="showPage('erp')">Solution ERP (Odoo)</a>
+          <a onclick="showPage('microsoft365')">Microsoft 365</a>
+          <a onclick="showPage('solutionit')">Solution IT</a>
+          <a onclick="showPage('devweb')">Développement Web</a>
+          <a onclick="showPage('virtualisation')">Virtualisation</a>
+          <a onclick="showPage('telephonie')">Téléphonie IP</a>
+        </div>
+      </li>
+      <li><a onclick="showPage('solutions')" id="nav-solutions">Solutions Spécialisées</a></li>
+      <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+      <li><a onclick="showPage('contact')" class="nav-cta">Devis Gratuit</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home');toggleMenu()">Accueil</a>
+  <a onclick="showPage('about');toggleMenu()">À Propos</a>
+  <a onclick="showPage('cybersecurite');toggleMenu()">Cybersécurité</a>
+  <a onclick="showPage('infogerance');toggleMenu()">Infogérance</a>
+  <a onclick="showPage('maintenance');toggleMenu()">Maintenance</a>
+  <a onclick="showPage('marketing');toggleMenu()">Marketing Digital</a>
+  <a onclick="showPage('audit');toggleMenu()">Audit</a>
+  <a onclick="showPage('erp');toggleMenu()">Solution ERP</a>
+  <a onclick="showPage('devweb');toggleMenu()">Développement Web</a>
+  <a onclick="showPage('solutions');toggleMenu()">Solutions Spécialisées</a>
+  <a onclick="showPage('blog');toggleMenu()">Blog</a>
+  <a onclick="showPage('contact');toggleMenu()">Contact</a>
+</div>
+
+<!-- ══════════════ PAGE: ACCUEIL ══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-inner container">
+      <div>
+        <div class="hero-badge"><span></span> Société Informatique Tunisie</div>
+        <h1>Transformez vos défis IT en <span class="grad">solutions innovantes</span></h1>
+        <p>Chez Infini-Soft, nous accompagnons les entreprises de toutes tailles dans leur transformation numérique avec des solutions technologiques sur-mesure, performantes et sécurisées.</p>
+        <div class="hero-btns">
+          <a class="btn-primary" onclick="showPage('contact')">Devis Gratuit</a>
+          <a class="btn-outline" onclick="showPage('about')">Découvrir Infini-Soft</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:var(--accent)">🛡️ Nos Expertises</div>
+          <div class="floating-chips">
+            <div class="chip">Cybersécurité</div>
+            <div class="chip">Cloud</div>
+            <div class="chip">Réseau</div>
+            <div class="chip">Odoo ERP</div>
+            <div class="chip">Microsoft 365</div>
+            <div class="chip">Virtualisation</div>
+            <div class="chip">DevSecOps</div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Années d'expérience</div></div>
+            <div class="stat-item"><div class="stat-num">250+</div><div class="stat-label">Clients satisfaits</div></div>
+            <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Projets livrés</div></div>
+            <div class="stat-item"><div class="stat-num">99%</div><div class="stat-label">Taux satisfaction</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-box"><div class="num">10+</div><div class="lbl">Années d'expérience</div></div>
+      <div class="stat-box"><div class="num">250+</div><div class="lbl">Clients en Tunisie</div></div>
+      <div class="stat-box"><div class="num">500+</div><div class="lbl">Projets réalisés</div></div>
+      <div class="stat-box"><div class="num">99%</div><div class="lbl">Satisfaction client</div></div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section>
+    <div class="container">
+      <div class="section-header text-center fade-in">
+        <div class="section-label">Nos Services</div>
+        <h2 class="section-title">Solutions Informatiques Complètes</h2>
+        <p class="section-sub">De la cybersécurité au développement web, en passant par l'infogérance et la téléphonie IP — nous couvrons tous vos besoins IT.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card fade-in" onclick="showPage('cybersecurite')">
+          <div class="service-icon">🛡️</div>
+          <h3>Cybersécurité</h3>
+          <p>Protection avancée de vos systèmes, audit de sécurité, tests d'intrusion, DevSecOps et sensibilisation des équipes.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('infogerance')">
+          <div class="service-icon">⚙️</div>
+          <h3>Infogérance Informatique</h3>
+          <p>Gestion externalisée de votre infrastructure IT avec monitoring proactif, maintenance et support 24/7.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('maintenance')">
+          <div class="service-icon">🔧</div>
+          <h3>Maintenance Informatique</h3>
+          <p>Dépannage, entretien et support technique pour garantir la fiabilité de votre parc informatique.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('audit')">
+          <div class="service-icon">🔍</div>
+          <h3>Audit Informatique</h3>
+          <p>Diagnostic complet de votre infrastructure pour identifier les failles et opportunités d'optimisation.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('solutionit')">
+          <div class="service-icon">💡</div>
+          <h3>Solution IT</h3>
+          <p>Conception et déploiement de systèmes d'information innovants adaptés à vos besoins spécifiques.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('devweb')">
+          <div class="service-icon">🌐</div>
+          <h3>Développement Web</h3>
+          <p>Sites web, applications métier et e-commerce modernes, performants et adaptés à votre marque.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('marketing')">
+          <div class="service-icon">📈</div>
+          <h3>Marketing Digital</h3>
+          <p>SEO, publicité en ligne, social media et stratégie digitale pour booster votre visibilité.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('erp')">
+          <div class="service-icon">📦</div>
+          <h3>Solution ERP (Odoo)</h3>
+          <p>Intégration et personnalisation de l'ERP Odoo pour optimiser vos processus métier.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('telephonie')">
+          <div class="service-icon">📞</div>
+          <h3>Téléphonie IP</h3>
+          <p>Solutions VoIP et communications unifiées pour une connectivité optimale de vos équipes.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('microsoft365')">
+          <div class="service-icon">☁️</div>
+          <h3>Microsoft 365</h3>
+          <p>Déploiement, migration et support Microsoft 365 pour votre productivité en entreprise.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('virtualisation')">
+          <div class="service-icon">🖥️</div>
+          <h3>Virtualisation</h3>
+          <p>Infrastructure virtuelle de serveurs et de stockage pour une meilleure performance et flexibilité.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+        <div class="service-card fade-in" onclick="showPage('solutions')">
+          <div class="service-icon">🔌</div>
+          <h3>Réseaux & Câblage</h3>
+          <p>Installation, configuration et maintenance des infrastructures réseau et câblage structuré.</p>
+          <a class="service-link">Savoir plus →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PREVIEW -->
+  <section style="background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="section-label fade-in">Qui Sommes-Nous</div>
+          <h2 class="section-title fade-in">Infini-Soft : Votre Partenaire Numérique de Confiance</h2>
+          <p style="color:var(--text2);line-height:1.8;margin-bottom:1.5rem;" class="fade-in">
+            Bienvenue chez <strong style="color:var(--white)">Infini-Soft</strong>, une entreprise d'ingénierie informatique basée en Tunisie. Nous sommes spécialisés dans l'accompagnement des entreprises de toutes tailles dans leur transformation numérique.
+          </p>
+          <p style="color:var(--text2);line-height:1.8;margin-bottom:2rem;" class="fade-in">
+            Notre mission est de vous offrir des solutions technologiques innovantes et personnalisées, de l'analyse de vos besoins à la mise en œuvre de solutions adaptées.
+          </p>
+          <div class="about-features fade-in">
+            <div class="feat-item"><div class="feat-dot"></div>Support 24/7</div>
+            <div class="feat-item"><div class="feat-dot"></div>Experts certifiés</div>
+            <div class="feat-item"><div class="feat-dot"></div>Solutions sur-mesure</div>
+            <div class="feat-item"><div class="feat-dot"></div>Présence en Tunisie</div>
+            <div class="feat-item"><div class="feat-dot"></div>Multilingue (AR/FR/EN)</div>
+            <div class="feat-item"><div class="feat-dot"></div>Partenaires premium</div>
+          </div>
+          <a class="btn-primary" style="margin-top:2rem;display:inline-block;" onclick="showPage('about')">En savoir plus</a>
+        </div>
+        <div>
+          <div class="about-img-placeholder fade-in">
+            <div style="text-align:center;position:relative;z-index:1;">
+              <div style="font-size:5rem;margin-bottom:1rem;">💻</div>
+              <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent)">Infini-Soft Team</div>
+              <div style="color:var(--text2);font-size:.85rem;margin-top:.3rem">Tunisie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="container">
+      <div class="section-header text-center fade-in">
+        <div class="section-label">Témoignages</div>
+        <h2 class="section-title">Ce que disent nos clients</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testi-card fade-in">
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Leur équipe est à l'écoute, réactive et professionnelle. Grâce à leur expertise, je peux me concentrer sur mon cœur de métier en toute sérénité.</p>
+          <div class="testi-author"><div class="testi-avatar">M</div><div><div class="testi-name">Mohamed</div><div class="testi-role">Directeur Général, Société de conseil</div></div></div>
+        </div>
+        <div class="testi-card fade-in">
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Nous avons constaté une amélioration significative de la fiabilité et de la sécurité de notre système depuis qu'Infini-Soft gère notre infrastructure.</p>
+          <div class="testi-author"><div class="testi-avatar">N</div><div><div class="testi-name">Nadia</div><div class="testi-role">Directrice Marketing, Entreprise textile</div></div></div>
+        </div>
+        <div class="testi-card fade-in">
+          <div class="testi-quote">"</div>
+          <p class="testi-text">Ingenius IT a rapidement mis en place des solutions de sécurité robustes et personnalisées. Nous sommes désormais sereins sur la protection de nos données.</p>
+          <div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name">Salma</div><div class="testi-role">Responsable Informatique, Services financiers</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section style="background:var(--bg3);border-top:1px solid var(--border);">
+    <div class="container">
+      <div class="section-header text-center fade-in">
+        <div class="section-label">Partenaires</div>
+        <h2 class="section-title">Nos Partenaires Technologiques</h2>
+      </div>
+      <div class="partners-row fade-in">
+        <div class="partner-logo">AWS</div>
+        <div class="partner-logo">Fortinet</div>
+        <div class="partner-logo">Microsoft</div>
+        <div class="partner-logo">Dell</div>
+        <div class="partner-logo">HP</div>
+        <div class="partner-logo">Kaspersky</div>
+        <div class="partner-logo">Citrix</div>
+        <div class="partner-logo">Juniper</div>
+        <div class="partner-logo">Google Cloud</div>
+        <div class="partner-logo">Dahua</div>
+        <div class="partner-logo">Legrand</div>
+        <div class="partner-logo">Grandstream</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-inner fade-in">
+      <div class="section-label" style="display:inline-block;margin-bottom:.8rem">Démarrer votre projet</div>
+      <h2 class="section-title">Votre projet est prêt à décoller ?</h2>
+      <p>Les experts d'Ingenius IT vous accompagnent et vous guident dans l'univers du digital. Contactez-nous pour un devis gratuit et sans engagement.</p>
+      <a class="btn-primary" onclick="showPage('contact')">Obtenir un Devis Gratuit</a>
+    </div>
+  </div>
+
+</div><!-- end page-home -->
+
+<!-- ══════════════ PAGE: À PROPOS ══════════════ -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">À Propos</span></div>
+      <div class="section-label">Notre Histoire</div>
+      <h1 class="section-title">Ingenius IT : Qui sommes-nous ?</h1>
+      <p class="section-sub" style="margin:0 auto">Votre partenaire informatique de confiance en Tunisie et en France depuis plus de 10 ans.</p>
+    </div>
+  </div>
+  <section>
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="section-label">Notre Mission</div>
+          <h2 class="section-title">Innover, Accompagner, Sécuriser</h2>
+          <p style="color:var(--text2);line-height:1.8;margin-bottom:1.2rem">Fondée en Tunisie, <strong style="color:var(--white)">Ingenius IT</strong> est une entreprise d'ingénierie informatique spécialisée dans l'accompagnement des organisations dans leur transformation numérique. Nous intervenons aussi bien auprès des PME que des grandes entreprises, avec la même exigence de qualité.</p>
+          <p style="color:var(--text2);line-height:1.8;margin-bottom:1.2rem">Notre équipe pluridisciplinaire de consultants, ingénieurs et développeurs certifiés est animée par une passion commune : vous offrir des solutions technologiques fiables, innovantes et sur-mesure.</p>
+          <p style="color:var(--text2);line-height:1.8;margin-bottom:2rem">Grâce à notre double présence en Tunisie et en France, nous combinons le meilleur des deux pays pour vous offrir un service de proximité avec un rayonnement international.</p>
+          <a class="btn-primary" onclick="showPage('contact')">Travailler avec nous</a>
+        </div>
+        <div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="service-card" style="text-align:center;">
+              <div style="font-size:2rem;margin-bottom:.5rem">🎯</div>
+              <h3 style="font-size:.95rem">Notre Vision</h3>
+              <p style="font-size:.83rem">Devenir le partenaire IT de référence en Afrique du Nord et en France.</p>
+            </div>
+            <div class="service-card" style="text-align:center;">
+              <div style="font-size:2rem;margin-bottom:.5rem">⚡</div>
+              <h3 style="font-size:.95rem">Réactivité</h3>
+              <p style="font-size:.83rem">Support 24/7 et intervention rapide pour assurer votre continuité d'activité.</p>
+            </div>
+            <div class="service-card" style="text-align:center;">
+              <div style="font-size:2rem;margin-bottom:.5rem">🏆</div>
+              <h3 style="font-size:.95rem">Excellence</h3>
+              <p style="font-size:.83rem">Standards de qualité élevés dans chaque projet et service délivré.</p>
+            </div>
+            <div class="service-card" style="text-align:center;">
+              <div style="font-size:2rem;margin-bottom:.5rem">🤝</div>
+              <h3 style="font-size:.95rem">Confiance</h3>
+              <p style="font-size:.83rem">Relation durable et transparente avec chacun de nos partenaires clients.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="background:var(--bg3);border-top:1px solid var(--border);">
+    <div class="container">
+      <div class="section-header text-center"><div class="section-label">Notre Équipe</div><h2 class="section-title">Experts à votre service</h2></div>
+      <div class="services-grid">
+        <div class="service-card" style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:var(--grad);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem">👨‍💻</div><h3>Ingénieurs Réseau</h3><p style="color:var(--text2);font-size:.85rem">Certifiés Cisco, Fortinet, Juniper pour concevoir et sécuriser vos infrastructures réseau.</p></div>
+        <div class="service-card" style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:var(--grad);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🔐</div><h3>Experts Cybersécurité</h3><p style="color:var(--text2);font-size:.85rem">Spécialistes en pentest, forensic et DevSecOps pour protéger votre système d'information.</p></div>
+        <div class="service-card" style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:var(--grad);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🌐</div><h3>Développeurs Web</h3><p style="color:var(--text2);font-size:.85rem">Full-stack developers pour concevoir des solutions web modernes et performantes.</p></div>
+        <div class="service-card" style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:var(--grad);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem">📊</div><h3>Consultants ERP</h3><p style="color:var(--text2);font-size:.85rem">Experts Odoo certifiés pour l'implémentation et la personnalisation de votre ERP.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════ PAGE: CYBERSÉCURITÉ ══════════════ -->
+<div class="page" id="page-cybersecurite">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Services</span><span class="sep">/</span><span class="current">Cybersécurité</span></div>
+      <div class="section-label">🛡️ Cybersécurité</div>
+      <h1 class="section-title">Société de Cybersécurité en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Protégez vos systèmes, données et utilisateurs avec nos solutions de cybersécurité avancées.</p>
+    </div>
+  </div>
+  <section>
+    <div class="container">
+      <div class="section-header text-center"><div class="section-label">Offres Sécurité</div><h2 class="section-title">Nos Services Cybersécurité</h2></div>
+      <div class="offers-grid">
+        <div class="offer-card"><div class="offer-icon">🔍</div><h3>Audit & Conseil</h3><p>Évaluation complète de votre posture de sécurité et recommandations stratégiques.</p><ul class="offer-list"><li>Audit de sécurité SI</li><li>Analyse de risques</li><li>Politique de sécurité</li><li>Plan de remédiation</li></ul></div>
+        <div class="offer-card featured"><div class="offer-badge">Populaire</div><div class="offer-icon">⚔️</div><h3>Test d'Intrusion</h3><p>Simulation d'attaques réelles pour identifier vos vulnérabilités avant les hackers.</p><ul class="offer-list"><li>Pentest réseau interne/externe</li><li>Test application web</li><li>Social engineering</li><li>Rapport détaillé</li></ul></div>
+        <div class="offer-card"><div class="offer-icon">🧪</div><h3>Forensic</h3><p>Investigation numérique après incident de sécurité pour comprendre l'attaque.</p><ul class="offer-list"><li>Analyse post-incident</li><li>Collecte de preuves</li><li>Rapport légal</li><li>Recommandations</li></ul></div>
+        <div class="offer-card"><div class="offer-icon">🚀</div><h3>DevSecOps</h3><p>Intégration de la sécurité dans vos pipelines CI/CD pour un code sécurisé dès la conception.</p><ul class="offer-list"><li>SAST / DAST</li><li>Container security</li><li>Kubernetes security</li><li>AWS / Azure security</li></ul></div>
+        <div class="offer-card"><div class="offer-icon">📚</div><h3>Sensibilisation</h3><p>Formation et cyber-entraînement de vos équipes pour créer une culture de la sécurité.</p><ul class="offer-list"><li>Formations phishing</li><li>Cyber-entraînement</li><li>Ateliers pratiques</li><li>Certification interne</li></ul></div>
+        <div class="offer-card"><div class="offer-icon">🔎</div><h3>Forensic Offensif</h3><p>Techniques offensives de renseignement pour mieux comprendre les menaces ciblant votre organisation.</p><ul class="offer-list"><li>Threat intelligence</li><li>OSINT</li><li>Red team</li><li>Veille menaces</li></ul></div>
+      </div>
+    </div>
+  </section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Besoin d'une évaluation de sécurité ?</h2><p>Nos experts en cybersécurité sont disponibles pour analyser votre posture de sécurité et vous proposer les meilleures solutions.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Audit Gratuit</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: INFOGÉRANCE ══════════════ -->
+<div class="page" id="page-infogerance">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Infogérance</span></div>
+      <div class="section-label">⚙️ Infogérance</div>
+      <h1 class="section-title">Infogérance Informatique en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Externalisez la gestion de votre IT et concentrez-vous sur votre cœur de métier.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="section-header text-center"><div class="section-label">Notre Approche</div><h2 class="section-title">Gestion IT Externalisée</h2></div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🖥️</div><h3>Monitoring Proactif</h3><p>Surveillance 24/7 de votre infrastructure pour détecter et résoudre les problèmes avant qu'ils n'impactent votre activité.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><h3>Maintenance Préventive</h3><p>Interventions planifiées pour maintenir vos équipements en parfait état de fonctionnement et prévenir les pannes.</p></div>
+      <div class="service-card"><div class="service-icon">💾</div><h3>Sauvegarde & Restauration</h3><p>Solutions de backup automatisées avec restauration rapide pour garantir la continuité de votre activité.</p></div>
+      <div class="service-card"><div class="service-icon">🛡️</div><h3>Sécurité Gérée</h3><p>Protection continue de votre SI avec mises à jour, antivirus, firewall et veille sécurité en temps réel.</p></div>
+      <div class="service-card"><div class="service-icon">📞</div><h3>Helpdesk 24/7</h3><p>Assistance multicanale (téléphone, email, tchat) pour vos utilisateurs, disponible à toute heure.</p></div>
+      <div class="service-card"><div class="service-icon">📊</div><h3>Rapports & Reporting</h3><p>Tableaux de bord et rapports périodiques pour une vision claire de l'état de votre infrastructure IT.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Confiez-nous votre IT</h2><p>Nos équipes prennent en charge l'intégralité de votre infrastructure informatique pour que vous puissiez vous concentrer sur l'essentiel.</p><a class="btn-primary" onclick="showPage('contact')">Obtenir un Devis</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: MAINTENANCE ══════════════ -->
+<div class="page" id="page-maintenance">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Maintenance Informatique</span></div>
+      <div class="section-label">🔧 Maintenance</div>
+      <h1 class="section-title">Maintenance Informatique en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Assurez la pérennité et la fiabilité de votre parc informatique avec nos experts.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🖥️</div><h3>Maintenance Matérielle</h3><p>Diagnostic, réparation et remplacement de composants défaillants pour tous types d'équipements informatiques.</p></div>
+      <div class="service-card"><div class="service-icon">💿</div><h3>Maintenance Logicielle</h3><p>Mises à jour, correctifs, optimisation des performances et résolution des conflits logiciels.</p></div>
+      <div class="service-card"><div class="service-icon">🌐</div><h3>Maintenance Réseau</h3><p>Supervision, dépannage et optimisation de votre infrastructure réseau LAN, WAN et WiFi.</p></div>
+      <div class="service-card"><div class="service-icon">📱</div><h3>Support Utilisateurs</h3><p>Assistance technique de proximité pour vos collaborateurs en cas de panne ou d'incident informatique.</p></div>
+      <div class="service-card"><div class="service-icon">📋</div><h3>Contrats de Maintenance</h3><p>Formules adaptées à votre budget : à l'incident, forfait mensuel ou contrat annuel tout inclus.</p></div>
+      <div class="service-card"><div class="service-icon">🚀</div><h3>Télémaintenance</h3><p>Intervention à distance sécurisée pour résoudre rapidement les problèmes sans déplacement.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Protégez votre parc informatique</h2><p>Contactez nos techniciens certifiés pour un contrat de maintenance adapté à vos besoins.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Devis</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: MARKETING DIGITAL ══════════════ -->
+<div class="page" id="page-marketing">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Marketing Digital</span></div>
+      <div class="section-label">📈 Marketing Digital</div>
+      <h1 class="section-title">Agence Marketing Digital Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Boostez votre visibilité en ligne et attirez de nouveaux clients grâce à nos stratégies digitales.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🔍</div><h3>Référencement SEO</h3><p>Optimisation de votre site web pour les moteurs de recherche et amélioration de votre positionnement organique.</p></div>
+      <div class="service-card"><div class="service-icon">📣</div><h3>Publicité en Ligne (SEA)</h3><p>Campagnes Google Ads et Facebook Ads ciblées pour générer des leads qualifiés rapidement.</p></div>
+      <div class="service-card"><div class="service-icon">📱</div><h3>Social Media</h3><p>Gestion de vos réseaux sociaux, création de contenu et animation de communauté pour votre marque.</p></div>
+      <div class="service-card"><div class="service-icon">✉️</div><h3>Email Marketing</h3><p>Campagnes d'emailing personnalisées pour fidéliser vos clients et augmenter vos conversions.</p></div>
+      <div class="service-card"><div class="service-icon">📊</div><h3>Analytics & Reporting</h3><p>Analyse des performances de vos actions digitales avec des tableaux de bord clairs et actionnables.</p></div>
+      <div class="service-card"><div class="service-icon">✍️</div><h3>Content Marketing</h3><p>Création de contenu à valeur ajoutée pour attirer et convertir votre audience cible.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Développez votre présence en ligne</h2><p>Nos experts en marketing digital construisent et exécutent des stratégies performantes pour votre croissance.</p><a class="btn-primary" onclick="showPage('contact')">Démarrer ma Stratégie</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: AUDIT ══════════════ -->
+<div class="page" id="page-audit">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Audit Informatique</span></div>
+      <div class="section-label">🔍 Audit IT</div>
+      <h1 class="section-title">Audit Informatique en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Diagnostic complet de votre infrastructure pour identifier les failles et opportunités d'amélioration.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🏗️</div><h3>Audit d'Infrastructure</h3><p>Évaluation complète de votre parc informatique, réseau, serveurs et équipements de communication.</p></div>
+      <div class="service-card"><div class="service-icon">🔐</div><h3>Audit de Sécurité</h3><p>Analyse de votre niveau de protection contre les cybermenaces et identification des vulnérabilités.</p></div>
+      <div class="service-card"><div class="service-icon">📋</div><h3>Audit de Conformité</h3><p>Vérification de la conformité de votre SI aux normes et réglementations en vigueur (ISO 27001, RGPD...).</p></div>
+      <div class="service-card"><div class="service-icon">⚡</div><h3>Audit de Performance</h3><p>Identification des goulots d'étranglement et des opportunités d'optimisation de vos systèmes.</p></div>
+      <div class="service-card"><div class="service-icon">📊</div><h3>Rapport Détaillé</h3><p>Livraison d'un rapport complet avec cartographie de votre SI, risques identifiés et plan d'actions priorisé.</p></div>
+      <div class="service-card"><div class="service-icon">🤝</div><h3>Accompagnement</h3><p>Suivi de la mise en œuvre des recommandations et mesure des améliorations obtenues.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Demandez votre audit IT</h2><p>Un diagnostic approfondi est la première étape vers une infrastructure IT optimale et sécurisée.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Audit</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: ERP ODOO ══════════════ -->
+<div class="page" id="page-erp">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Solution ERP Odoo</span></div>
+      <div class="section-label">📦 ERP Odoo</div>
+      <h1 class="section-title">Solution ERP Odoo en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Optimisez vos processus métier avec l'ERP Odoo, déployé et personnalisé par nos experts certifiés.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🛒</div><h3>Ventes & CRM</h3><p>Gérez vos opportunités commerciales, devis, commandes et suivi client depuis une interface unifiée.</p></div>
+      <div class="service-card"><div class="service-icon">📦</div><h3>Gestion des Stocks</h3><p>Contrôle des inventaires, traçabilité des produits et gestion des entrepôts en temps réel.</p></div>
+      <div class="service-card"><div class="service-icon">💰</div><h3>Comptabilité</h3><p>Module comptable complet : facturation, paiements, déclarations fiscales et rapports financiers.</p></div>
+      <div class="service-card"><div class="service-icon">👥</div><h3>Ressources Humaines</h3><p>Gestion des employés, paie, congés, formations et évaluations depuis Odoo HR.</p></div>
+      <div class="service-card"><div class="service-icon">🏭</div><h3>Production</h3><p>Planification de production, gestion des nomenclatures et suivi des ordres de fabrication.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><h3>Paramétrage & Support</h3><p>Configuration sur-mesure, formation des utilisateurs et support technique continu post-déploiement.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Prêt à digitaliser votre gestion ?</h2><p>Nos consultants Odoo certifiés vous accompagnent de l'étude de vos besoins jusqu'à la mise en production.</p><a class="btn-primary" onclick="showPage('contact')">Demander une Démo</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: MICROSOFT 365 ══════════════ -->
+<div class="page" id="page-microsoft365">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Microsoft 365</span></div>
+      <div class="section-label">☁️ Microsoft 365</div>
+      <h1 class="section-title">Solution Microsoft 365 en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Déploiement, migration et support Microsoft 365 pour améliorer la productivité de vos équipes.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="offers-grid">
+      <div class="offer-card"><div class="offer-icon">📧</div><h3>M365 Business Basic</h3><p>Messagerie Exchange, Teams, SharePoint Online et 1 To OneDrive par utilisateur.</p><ul class="offer-list"><li>Exchange Online</li><li>Microsoft Teams</li><li>SharePoint Online</li><li>1 To OneDrive</li></ul></div>
+      <div class="offer-card featured"><div class="offer-badge">Recommandé</div><div class="offer-icon">💼</div><h3>M365 Business Standard</h3><p>Toutes les apps Office en ligne et en desktop + services cloud premium.</p><ul class="offer-list"><li>Toutes apps Office desktop</li><li>Exchange + Teams avancé</li><li>Intune MDM basique</li><li>Enregistrement de réunions</li></ul></div>
+      <div class="offer-card"><div class="offer-icon">🔒</div><h3>M365 Business Premium</h3><p>Suite complète avec sécurité avancée, conformité et gestion des appareils.</p><ul class="offer-list"><li>Azure AD Premium P1</li><li>Intune complet</li><li>Defender for Business</li><li>Information Protection</li></ul></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Migrez vers Microsoft 365</h2><p>Nos experts gèrent votre migration sans interruption de service et forment vos équipes à l'utilisation des nouveaux outils.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Devis M365</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: SOLUTION IT ══════════════ -->
+<div class="page" id="page-solutionit">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Solution IT</span></div>
+      <div class="section-label">💡 Solution IT</div>
+      <h1 class="section-title">Intégrateur de Solutions IT en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Conception et déploiement de solutions IT sur-mesure pour votre infrastructure d'entreprise.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">📡</div><h3>WiFi Entreprise</h3><p>Déploiement de réseaux WiFi haute performance pour vos locaux, avec gestion centralisée et sécurité avancée.</p></div>
+      <div class="service-card"><div class="service-icon">🔥</div><h3>Firewall Fortinet</h3><p>Installation et configuration de pare-feu FortiGate pour protéger votre réseau des intrusions.</p></div>
+      <div class="service-card"><div class="service-icon">🖥️</div><h3>Serveurs & Virtualisation</h3><p>Installation et configuration de serveurs physiques et virtuels adaptés à votre charge de travail.</p></div>
+      <div class="service-card"><div class="service-icon">💾</div><h3>Data Backup</h3><p>Solutions de sauvegarde automatisées et sécurisées avec restauration rapide en cas d'incident.</p></div>
+      <div class="service-card"><div class="service-icon">✉️</div><h3>Hébergement Emailing</h3><p>Serveurs de messagerie dédiés avec haute disponibilité, antispam et archivage conforme.</p></div>
+      <div class="service-card"><div class="service-icon">🔒</div><h3>Sécurité Informatique</h3><p>Solutions endpoint protection, DLP, SIEM et gestion des identités pour une sécurité globale.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Construisons votre infrastructure IT</h2><p>Nos ingénieurs certifiés conçoivent et déploient des solutions IT robustes et évolutives pour votre entreprise.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Devis</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: DÉVELOPPEMENT WEB ══════════════ -->
+<div class="page" id="page-devweb">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Développement Web</span></div>
+      <div class="section-label">🌐 Développement Web</div>
+      <h1 class="section-title">Société de Développement Web Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Conception et développement de sites web et applications web modernes, performants et sur-mesure.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🎨</div><h3>Sites Vitrines</h3><p>Sites web élégants et professionnels pour présenter votre entreprise et vos services en ligne.</p></div>
+      <div class="service-card"><div class="service-icon">🛒</div><h3>E-Commerce</h3><p>Boutiques en ligne performantes avec gestion des produits, paiements sécurisés et logistique.</p></div>
+      <div class="service-card"><div class="service-icon">⚙️</div><h3>Applications Web</h3><p>Développement d'applications métier sur-mesure pour automatiser et digitaliser vos processus.</p></div>
+      <div class="service-card"><div class="service-icon">📱</div><h3>Design Responsive</h3><p>Interfaces adaptées à tous les écrans pour une expérience optimale sur mobile, tablette et desktop.</p></div>
+      <div class="service-card"><div class="service-icon">⚡</div><h3>Performance & SEO</h3><p>Optimisation de la vitesse et du référencement naturel pour un meilleur classement Google.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><h3>Maintenance Web</h3><p>Mises à jour régulières, corrections de bugs et évolutions fonctionnelles pour votre site.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Votre prochain projet web commence ici</h2><p>De la maquette au déploiement, notre équipe vous accompagne pour créer une présence web qui vous démarque.</p><a class="btn-primary" onclick="showPage('contact')">Lancer mon Projet Web</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: VIRTUALISATION ══════════════ -->
+<div class="page" id="page-virtualisation">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Virtualisation</span></div>
+      <div class="section-label">🖥️ Virtualisation</div>
+      <h1 class="section-title">Solutions de Virtualisation en Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Optimisez votre infrastructure IT avec nos solutions de virtualisation serveur, stockage et desktop.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🖥️</div><h3>Virtualisation Serveur</h3><p>Consolidation de vos serveurs physiques en VMs pour réduire les coûts et améliorer la flexibilité.</p></div>
+      <div class="service-card"><div class="service-icon">💾</div><h3>Virtualisation Stockage</h3><p>Solutions SAN/NAS virtualisées pour une gestion centralisée et performante de vos données.</p></div>
+      <div class="service-card"><div class="service-icon">🖱️</div><h3>VDI – Postes Virtuels</h3><p>Infrastructure de bureau virtuel pour des postes de travail accessibles depuis n'importe où.</p></div>
+      <div class="service-card"><div class="service-icon">☁️</div><h3>Cloud Hybride</h3><p>Architecture hybride combinant infrastructure on-premise et cloud public pour une flexibilité maximale.</p></div>
+      <div class="service-card"><div class="service-icon">🔄</div><h3>Migration & Clonage</h3><p>Migration P2V de vos serveurs physiques vers des machines virtuelles sans interruption de service.</p></div>
+      <div class="service-card"><div class="service-icon">📊</div><h3>Gestion & Monitoring</h3><p>Outils de supervision et de gestion centralisée de votre environnement virtualisé.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Modernisez votre infrastructure</h2><p>La virtualisation réduit vos coûts, améliore la disponibilité et simplifie la gestion de votre IT.</p><a class="btn-primary" onclick="showPage('contact')">En savoir plus</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: TÉLÉPHONIE ══════════════ -->
+<div class="page" id="page-telephonie">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Téléphonie IP</span></div>
+      <div class="section-label">📞 Téléphonie IP</div>
+      <h1 class="section-title">Solutions Téléphonie IP & VoIP Tunisie</h1>
+      <p class="section-sub" style="margin:0 auto">Communications unifiées, VoIP et visioconférence pour connecter vos équipes efficacement.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">📞</div><h3>IPBX d'Entreprise</h3><p>Installation de centraux téléphoniques IP pour gérer vos communications internes et externes.</p></div>
+      <div class="service-card"><div class="service-icon">🎙️</div><h3>VoIP & SIP Trunk</h3><p>Lignes téléphoniques IP pour réduire vos coûts de communication et bénéficier d'une haute disponibilité.</p></div>
+      <div class="service-card"><div class="service-icon">📹</div><h3>Visioconférence</h3><p>Solutions de vidéoconférence pour les réunions à distance entre vos équipes et partenaires.</p></div>
+      <div class="service-card"><div class="service-icon">💬</div><h3>Messagerie Unifiée</h3><p>Centralisation de vos communications (voix, email, chat) dans une seule interface intuitive.</p></div>
+      <div class="service-card"><div class="service-icon">📱</div><h3>Softphone Mobile</h3><p>Applications mobiles pour que vos équipes puissent travailler depuis n'importe où avec leur numéro fixe.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><h3>Support & Maintenance</h3><p>Support technique et maintenance de votre infrastructure téléphonique avec SLA garanti.</p></div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Modernisez votre téléphonie</h2><p>Réduisez vos coûts de communication et améliorez la collaboration de vos équipes avec nos solutions VoIP.</p><a class="btn-primary" onclick="showPage('contact')">Demander un Devis</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: SOLUTIONS SPÉCIALISÉES ══════════════ -->
+<div class="page" id="page-solutions">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Solutions Spécialisées</span></div>
+      <div class="section-label">🔌 Solutions Spécialisées</div>
+      <h1 class="section-title">Solutions Spécialisées</h1>
+      <p class="section-sub" style="margin:0 auto">Site Survey, Certification de Câbles et Sécurité Électronique pour vos infrastructures physiques.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="about-grid" style="margin-bottom:3rem">
+      <div class="expertise-detail">
+        <div style="font-size:2.5rem;margin-bottom:1rem">📡</div>
+        <h3>Site Survey</h3>
+        <p>L'étude de site (Site Survey) est une étape indispensable avant tout déploiement réseau WiFi ou câblé. Nos ingénieurs réalisent une analyse complète de votre environnement pour garantir une couverture optimale et prévoir les interférences potentielles.</p>
+        <p>Nous utilisons des outils professionnels pour cartographier la couverture radio, identifier les obstacles et optimiser le placement des équipements actifs et passifs.</p>
+        <div class="tag-list">
+          <span class="tag">Analyse Radio Fréquence</span>
+          <span class="tag">Cartographie WiFi</span>
+          <span class="tag">Rapport Détaillé</span>
+          <span class="tag">Recommandations</span>
+        </div>
+      </div>
+      <div class="expertise-detail">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🔌</div>
+        <h3>Certification de Câbles</h3>
+        <p>La certification de câbles est la validation officielle que votre infrastructure de câblage répond aux normes de performance requises (Cat5e, Cat6, Cat6A, Cat7, fibre optique). Nous utilisons des certifiomètres Fluke Networks homologués pour des rapports conformes aux standards TIA/ISO.</p>
+        <p>Chaque lien testé fait l'objet d'un rapport de certification détaillé que vous pouvez présenter à vos assureurs ou en cas de litige.</p>
+        <div class="tag-list">
+          <span class="tag">Cat5e / Cat6 / Cat6A</span>
+          <span class="tag">Fibre Optique</span>
+          <span class="tag">Fluke Networks</span>
+          <span class="tag">Normes TIA/ISO</span>
+        </div>
+      </div>
+    </div>
+    <div class="expertise-detail">
+      <div style="font-size:2.5rem;margin-bottom:1rem">📷</div>
+      <h3>Sécurité Électronique</h3>
+      <p>Ingenius IT conçoit et installe des systèmes de sécurité électronique complets pour entreprises et particuliers. De la vidéosurveillance IP au contrôle d'accès biométrique, nous protégeons vos locaux avec les technologies les plus fiables.</p>
+      <div class="services-grid" style="margin-top:1.5rem">
+        <div class="service-card"><div class="service-icon">📹</div><h3>Vidéosurveillance IP</h3><p>Caméras IP HD avec vision nocturne, enregistrement cloud et accès à distance depuis smartphone.</p></div>
+        <div class="service-card"><div class="service-icon">🚪</div><h3>Contrôle d'Accès</h3><p>Badges, biométrie et gestion centralisée des droits d'accès pour sécuriser vos zones sensibles.</p></div>
+        <div class="service-card"><div class="service-icon">🚨</div><h3>Alarme & Détection</h3><p>Systèmes d'alarme intrusion avec détecteurs de mouvement et notification en temps réel.</p></div>
+      </div>
+    </div>
+  </div></section>
+  <div class="cta-section"><div class="cta-inner"><h2 class="section-title">Sécurisez vos infrastructures</h2><p>Nos experts interviennent pour des études de site, certifications ou installations de sécurité électronique sur toute la Tunisie.</p><a class="btn-primary" onclick="showPage('contact')">Prendre Contact</a></div></div>
+</div>
+
+<!-- ══════════════ PAGE: BLOG ══════════════ -->
+<div class="page" id="page-blog">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Blog</span></div>
+      <div class="section-label">📝 Blog</div>
+      <h1 class="section-title">Actualités & Conseils IT</h1>
+      <p class="section-sub" style="margin:0 auto">Restez informé des dernières tendances en cybersécurité, cloud, développement web et transformation digitale.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img">🛡️</div>
+        <div class="blog-body">
+          <div class="blog-tag">Cybersécurité</div>
+          <h3>Les 10 menaces cybersécurité les plus critiques en 2025</h3>
+          <p style="color:var(--text2);font-size:.85rem">Ransomware, phishing avancé, attaques sur la supply chain... découvrez comment protéger votre entreprise.</p>
+          <div class="blog-meta"><span>15 Jan 2025</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">☁️</div>
+        <div class="blog-body">
+          <div class="blog-tag">Cloud</div>
+          <h3>Migration Microsoft 365 : guide complet pour les PME tunisiennes</h3>
+          <p style="color:var(--text2);font-size:.85rem">Tout ce que vous devez savoir pour migrer vos outils vers Microsoft 365 sans interruption.</p>
+          <div class="blog-meta"><span>08 Jan 2025</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🤖</div>
+        <div class="blog-body">
+          <div class="blog-tag">Transformation Digitale</div>
+          <h3>L'intelligence artificielle au service des PME : cas pratiques</h3>
+          <p style="color:var(--text2);font-size:.85rem">Comment les PME tunisiennes peuvent tirer parti de l'IA pour automatiser leurs processus.</p>
+          <div class="blog-meta"><span>02 Jan 2025</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">📦</div>
+        <div class="blog-body">
+          <div class="blog-tag">ERP</div>
+          <h3>Odoo 17 : les nouvelles fonctionnalités qui changent la donne</h3>
+          <p style="color:var(--text2);font-size:.85rem">Tour d'horizon des améliorations majeures d'Odoo 17 pour la gestion d'entreprise.</p>
+          <div class="blog-meta"><span>20 Déc 2024</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🔌</div>
+        <div class="blog-body">
+          <div class="blog-tag">Réseau</div>
+          <h3>WiFi 6E en entreprise : pourquoi passer à la nouvelle génération ?</h3>
+          <p style="color:var(--text2);font-size:.85rem">Performance, latence, densité d'appareils : tout sur les bénéfices du WiFi 6E pour votre entreprise.</p>
+          <div class="blog-meta"><span>15 Déc 2024</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🔐</div>
+        <div class="blog-body">
+          <div class="blog-tag">DevSecOps</div>
+          <h3>DevSecOps : intégrer la sécurité dès la phase de développement</h3>
+          <p style="color:var(--text2);font-size:.85rem">Pourquoi et comment intégrer la sécurité dans votre pipeline CI/CD pour livrer du code sécurisé.</p>
+          <div class="blog-meta"><span>05 Déc 2024</span><span style="color:var(--accent);cursor:pointer">Lire →</span></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ══════════════ PAGE: CONTACT ══════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><span onclick="showPage('home')" style="cursor:pointer;color:var(--text2)">Accueil</span><span class="sep">/</span><span class="current">Contact</span></div>
+      <div class="section-label">📬 Contact</div>
+      <h1 class="section-title">Contactez Ingenius IT</h1>
+      <p class="section-sub" style="margin:0 auto">Nos experts sont disponibles 24h/24 et 7j/7 pour répondre à vos besoins informatiques.</p>
+    </div>
+  </div>
+  <section><div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Parlons de votre projet</h3>
+        <p>Que vous ayez besoin d'un devis, d'une consultation ou d'un support urgent, notre équipe est là pour vous accompagner.</p>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail"><strong>Tunisie</strong><span>+216 92 682 923 / +216 50 678 456</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail"><strong>France</strong><span>04 65 01 14 38</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-detail"><strong>Email</strong><span>contact@ingeniusit.com</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail"><strong>Adresse</strong><span>Tunis, Tunisie</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail"><strong>Disponibilité</strong><span>Support 24/7 – Lun–Ven 8h–18h (bureau)</span></div>
+        </div>
+        <div style="margin-top:2rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:.8rem">🌍 Nous intervenons en :</div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <span class="tag">Tunis</span><span class="tag">Sfax</span><span class="tag">Sousse</span><span class="tag">Bizerte</span><span class="tag">Nabeul</span><span class="tag">France entière</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3 style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">Demander un Devis Gratuit</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Prénom *</label><input type="text" placeholder="Votre prénom"></div>
+          <div class="form-group"><label>Nom *</label><input type="text" placeholder="Votre nom"></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input type="email" placeholder="votre@email.com"></div>
+        <div class="form-group"><label>Téléphone</label><input type="tel" placeholder="+216 XX XXX XXX"></div>
+        <div class="form-group"><label>Entreprise</label><input type="text" placeholder="Nom de votre entreprise"></div>
+        <div class="form-group">
+          <label>Service souhaité</label>
+          <select>
+            <option value="">Choisir un service...</option>
+            <option>Cybersécurité</option>
+            <option>Infogérance Informatique</option>
+            <option>Maintenance Informatique</option>
+            <option>Audit Informatique</option>
+            <option>Solution ERP Odoo</option>
+            <option>Microsoft 365</option>
+            <option>Solution IT</option>
+            <option>Développement Web</option>
+            <option>Marketing Digital</option>
+            <option>Virtualisation</option>
+            <option>Téléphonie IP</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message *</label><textarea placeholder="Décrivez votre projet ou votre besoin..."></textarea></div>
+        <button class="btn-primary" style="width:100%;justify-content:center" onclick="handleSubmit()">Envoyer ma Demande →</button>
+        <p style="color:var(--text2);font-size:.78rem;margin-top:1rem;text-align:center">Réponse garantie sous 24h – Devis 100% gratuit & sans engagement</p>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="font-size:1.3rem;cursor:default">Ingenius IT</div>
+      <p>Société informatique en Tunisie et France. Nous transformons vos défis technologiques en solutions innovantes et performantes.</p>
+      <div class="footer-socials">
+        <div class="social-btn">in</div>
+        <div class="social-btn">f</div>
+        <div class="social-btn">𝕏</div>
+        <div class="social-btn">▶</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a onclick="showPage('infogerance')">Infogérance</a></li>
+        <li><a onclick="showPage('cybersecurite')">Cybersécurité</a></li>
+        <li><a onclick="showPage('maintenance')">Maintenance</a></li>
+        <li><a onclick="showPage('marketing')">Marketing Digital</a></li>
+        <li><a onclick="showPage('audit')">Audit IT</a></li>
+        <li><a onclick="showPage('erp')">Solution ERP</a></li>
+        <li><a onclick="showPage('devweb')">Développement Web</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a onclick="showPage('microsoft365')">Microsoft 365</a></li>
+        <li><a onclick="showPage('solutionit')">Solution IT</a></li>
+        <li><a onclick="showPage('virtualisation')">Virtualisation</a></li>
+        <li><a onclick="showPage('telephonie')">Téléphonie IP</a></li>
+        <li><a onclick="showPage('solutions')">Site Survey</a></li>
+        <li><a onclick="showPage('solutions')">Certification Câbles</a></li>
+        <li><a onclick="showPage('solutions')">Sécurité Électronique</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a>+216 92 682 923</a></li>
+        <li><a>+216 50 678 456</a></li>
+        <li><a>04 65 01 14 38 (FR)</a></li>
+        <li><a>contact@ingeniusit.com</a></li>
+        <li style="margin-top:.8rem"><a onclick="showPage('about')">À Propos</a></li>
+        <li><a onclick="showPage('blog')">Blog</a></li>
+        <li><a onclick="showPage('contact')">Devis Gratuit</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ingenius IT – Société Informatique Tunisie & France. Tous droits réservés.</p>
+    <p style="color:var(--text2);font-size:.8rem">Tunisie · France · Support 24/7</p>
+  </div>
+</footer>
+
+<script>
+// ─── PAGE NAVIGATION ───
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) {
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const nav = document.getElementById('nav-' + id);
+    if (nav) nav.classList.add('active');
+    else document.getElementById('nav-services') && document.getElementById('nav-services').classList.add('active');
+  }
+  initFadeIn();
+}
+
+// ─── HAMBURGER ───
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── FADE-IN OBSERVER ───
+function initFadeIn() {
+  setTimeout(() => {
+    const els = document.querySelectorAll('.page.active .fade-in');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      els.forEach(el => obs.observe(el));
+    } else {
+      els.forEach(el => el.classList.add('visible'));
+    }
+  }, 50);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCounters() {
+  document.querySelectorAll('.stat-num,.num').forEach(el => {
+    const target = parseInt(el.textContent);
+    if (isNaN(target)) return;
+    const suffix = el.textContent.replace(/[0-9]/g,'');
+    let current = 0;
+    const step = target / 40;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+  });
+}
+
+// ─── FORM SUBMIT ───
+function handleSubmit() {
+  const btn = document.querySelector('#page-contact .btn-primary');
+  btn.textContent = '✅ Message envoyé !';
+  btn.style.background = 'linear-gradient(135deg,#00c888,#0077ff)';
+  setTimeout(() => {
+    btn.textContent = 'Envoyer ma Demande →';
+    btn.style.background = '';
+  }, 3000);
+}
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', () => {
+  initFadeIn();
+  animateCounters();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - Infini-Soft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --sidebar-width: 260px;
+    }
+    body { background: #050505; display: flex; }
+    
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 2rem;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    
+    .main-content {
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      padding: 2rem;
+    }
+    
+    .nav-item {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      color: var(--text2);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.5rem;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+    .nav-item.active { border-left: 3px solid var(--accent); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 15px;
+    }
+    .stat-card h3 { font-size: 0.9rem; color: var(--text2); margin-bottom: 0.5rem; }
+    .stat-card .value { font-size: 1.8rem; font-weight: 800; font-family: 'Syne', sans-serif; }
+
+    .chart-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .btn-logout {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo" style="margin-bottom: 3rem;">
+      <img src="img/logo-light.svg" alt="Infini-Soft" style="height: 35px;">
+    </div>
+    <div class="nav-item active">📊 Dashboard</div>
+    <div class="nav-item">📝 Articles Blog</div>
+    <div class="nav-item">📬 Messages</div>
+    <div class="nav-item">⚙️ Paramètres</div>
+    
+    <div style="position: absolute; bottom: 2rem; width: calc(100% - 4rem);">
+      <button onclick="logout()" class="btn-logout" style="width: 100%;">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h1 style="font-family: 'Syne', sans-serif;">Tableau de Bord</h1>
+      <div id="admin-name" style="color: var(--text2);">Admin</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Visites Totales</h3>
+        <div class="value" id="stat-visits">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Messages Reçus</h3>
+        <div class="value" id="stat-mails">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Articles Blog</h3>
+        <div class="value" id="stat-posts">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Services</h3>
+        <div class="value" id="stat-services">-</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="visitsChart" height="100"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = window.location.origin === 'null' || window.location.protocol === 'file:' 
+      ? 'http://localhost:5000/api' 
+      : '/api';
+
+    // Check Auth
+    const token = localStorage.getItem('adminToken');
+    if (!token) window.location.href = 'login.html';
+
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API_URL}/Dashboard/stats`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.status === 401) logout();
+        
+        const data = await res.json();
+        document.getElementById('stat-visits').textContent = data.visits;
+        document.getElementById('stat-mails').textContent = data.mails;
+        document.getElementById('stat-posts').textContent = data.posts;
+        document.getElementById('stat-services').textContent = data.services;
+
+        initChart(data.chartData);
+      } catch (err) {
+        console.error("Erreur stats:", err);
+      }
+    }
+
+    function initChart(chartData) {
+      const ctx = document.getElementById('visitsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+          datasets: [{
+            label: 'Visites',
+            data: chartData.visits,
+            borderColor: '#0077ff',
+            backgroundColor: 'rgba(0, 119, 255, 0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+            x: { grid: { display: false }, ticks: { color: '#888' } }
+          }
+        }
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem('adminToken');
+      window.location.href = 'login.html';
+    }
+
+    loadStats();
+  </script>
+</body>
+</html>

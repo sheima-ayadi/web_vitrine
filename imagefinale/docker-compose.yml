@@ -1,0 +1,13 @@
+services:
+  web:
+    # Cette image sera téléchargée depuis votre GitHub Registry
+    image: ghcr.io/sheima-ayadi/web_vitrine:latest
+    container_name: infinisoft_app
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # L'utilisateur doit fournir ces deux mots de passe pour que le site fonctionne
+      - ConnectionStrings__DefaultConnection=Host=aws-0-eu-west-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.rovwdqnblndqblrwctom;Password=${DB_PASSWORD};SSL Mode=Require;Trust Server Certificate=true;
+      - Jwt__Key=${JWT_SECRET}
+    restart: always
