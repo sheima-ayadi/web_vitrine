@@ -1,7 +1,7 @@
 services:
   web:
-    # Cette image sera téléchargée depuis votre GitHub Registry
-    image: ghcr.io/sheima-ayadi/web_vitrine:latest
+    # Cette image sera téléchargée depuis Docker Hub
+    image: sheimaayadi/web_vitrine:latest
     container_name: infinisoft_app
     ports:
       - "8080:8080"

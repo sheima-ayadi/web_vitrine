@@ -7,7 +7,7 @@ Le code source est entièrement compilé à l'intérieur de l'image Docker pour 
 
 ## 📦 Pré-requis
 - **Docker** et **Docker Compose** installés sur votre machine.
-- Un accès à internet pour télécharger l'image depuis GitHub Packages.
+- Un accès à internet pour télécharger l'image depuis Docker Hub.
 
 ## 🚀 Installation Rapide
 
@@ -31,7 +31,7 @@ Le code source est entièrement compilé à l'intérieur de l'image Docker pour 
    Le site est désormais accessible sur : **[http://localhost:8080](http://localhost:8080)**
 
 ## ⚙️ Détails Techniques
-- **Image Docker** : `ghcr.io/sheima-ayadi/web_vitrine:latest`
+- **Image Docker** : `sheimaayadi/web_vitrine:latest` (Docker Hub)
 - **Port** : 8080
 - **Base de données** : Connexion ultra-rapide via **Supabase Connection Pooler** (PostgreSQL) pour une performance optimale.
 
