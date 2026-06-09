@@ -1,43 +1,39 @@
-# 🚀 Infini-Soft - Image Finale Docker
+# 🚀 Infini-Soft - Site Web Complet (Docker)
 
-Ce dossier contient tout le nécessaire pour construire et publier l'image Docker de votre site complet (Frontend + Backend) sur GitHub.
+Bienvenue sur le dépôt officiel du site Infini-Soft. Ce projet contient une solution complète comprenant le **Site Vitrine (Frontend)** et le **Portail d'Administration (Backend)**, le tout prêt à être déployé via Docker.
 
-## 📁 Structure du dossier
-- `Backend/` : Code source C# (utilisé uniquement pour la compilation).
-- `frontend/` : Site vitrine statique.
-- `Dockerfile` : Recette de compilation sécurisée (ne contient pas le code source dans l'image finale).
-- `docker-compose.yml` : Fichier à partager avec les utilisateurs.
+## 🛡️ Protection du Code
+Le code source est entièrement compilé à l'intérieur de l'image Docker pour garantir la sécurité et la propriété intellectuelle. Vous pouvez utiliser le site et le déployer sans avoir accès aux fichiers sources `.cs`.
 
-## 🛠️ Instructions pour VOUS (Publication)
+## 📦 Pré-requis
+- **Docker** et **Docker Compose** installés sur votre machine.
+- Un accès à internet pour télécharger l'image depuis GitHub Packages.
 
-1. **Construire l'image :**
-   ```bash
-   docker build -t ghcr.io/sheima-ayadi/web_vitrine:latest .
-   ```
+## 🚀 Installation Rapide
 
-2. **Se connecter à GitHub Packages :**
-   ```bash
-   docker login ghcr.io -u sheima-ayadi
-   ```
+1. **Récupérer le fichier de configuration :**
+   Vous n'avez besoin que du fichier `docker-compose.yml` présent à la racine de ce dépôt.
 
-3. **Publier l'image :**
-   ```bash
-   docker push ghcr.io/sheima-ayadi/web_vitrine:latest
-   ```
-
-## 👥 Instructions pour vos UTILISATEURS
-
-Donnez-leur uniquement le fichier `docker-compose.yml` et dites-leur de :
-
-1. Créer un fichier `.env` à côté du `docker-compose.yml` :
+2. **Configurer vos accès (Fichier .env) :**
+   Créez un fichier nommé `.env` dans le même dossier que votre `docker-compose.yml` et ajoutez les deux mots de passe fournis par l'administrateur :
    ```env
    DB_PASSWORD=votre_mot_de_passe_base_de_donnees
    JWT_SECRET=votre_cle_secrete_admin
    ```
 
-2. Lancer le site :
+3. **Lancer le site :**
+   Ouvrez un terminal dans le dossier et tapez :
    ```bash
    docker-compose up -d
    ```
 
-Le site sera accessible sur `http://localhost:8080`.
+4. **Accéder au site :**
+   Le site est désormais accessible sur : **[http://localhost:8080](http://localhost:8080)**
+
+## ⚙️ Détails Techniques
+- **Image Docker** : `ghcr.io/sheima-ayadi/web_vitrine:latest`
+- **Port** : 8080
+- **Base de données** : Connexion sécurisée vers Supabase (PostgreSQL).
+
+---
+© 2026 Infini-Soft. Tous droits réservés.
