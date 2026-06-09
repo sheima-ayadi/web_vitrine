@@ -17,3 +17,10 @@ obj/
 
 # Docker
 # On ne les ignore pas pour GitHub
+
+# Dossiers à ignorer pour GitHub (mais garder sur PC)
+Backend/
+frontend/
+imagefinale/
+SITE_COMPLET/
+VITRINE_SEULE/
