@@ -33,7 +33,7 @@ Le code source est entièrement compilé à l'intérieur de l'image Docker pour 
 ## ⚙️ Détails Techniques
 - **Image Docker** : `ghcr.io/sheima-ayadi/web_vitrine:latest`
 - **Port** : 8080
-- **Base de données** : Connexion sécurisée vers Supabase (PostgreSQL).
+- **Base de données** : Connexion ultra-rapide via **Supabase Connection Pooler** (PostgreSQL) pour une performance optimale.
 
 ---
 © 2026 Infini-Soft. Tous droits réservés.
